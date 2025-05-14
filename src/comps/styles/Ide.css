@@ -31,6 +31,7 @@
   font-weight: bold;
   justify-content: center;
   background-color: var(--presence-bg);
+  cursor: pointer;
 }
 
 .header :nth-child(odd) {
@@ -124,7 +125,11 @@
   justify-content: center;
   overflow: hidden;
 }
-
+.terminal .outputbox .panel div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .terminal .outputbox .panel .runner {
   height: 100%;
   width: 34%;
