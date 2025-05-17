@@ -92,7 +92,7 @@ const Ide = () => {
       </div>
       <div className="panel">
         <div id="runner" className="runner" onClick={runCode}>
-          <FontAwesomeIcon icon={faPlay} style={{color: 'var(--primary-text)', fontSize: '3rem', cursor: 'pointer'}} />
+          <FontAwesomeIcon icon={faPlay} style={{color: 'var(--primary-text)', fontSize: '2rem', cursor: 'pointer'}} />
         </div>
         <div className="runtime">
           <p>{runtime} s</p>
@@ -109,6 +109,7 @@ const Ide = () => {
       <div className="terminal">
         <div className="inputbox">
           <textarea onChange={(e) => setInput(e.target.value)}></textarea>
+          <div className="tag"> Input Box </div>
         </div>
         <div className="outputbox">
           <textarea value={output} onChange={(e) => setOutput(e.target.value)} readOnly></textarea>
