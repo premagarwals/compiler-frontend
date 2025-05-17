@@ -56,7 +56,7 @@ const Ide = () => {
 
   const runCode = async () => {
     setOutput('~@Output:');
-    const response = await fetch('http://127.0.0.1:8000/ide/', {
+    const response = await fetch('http://127.0.0.1:8080/ide/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
