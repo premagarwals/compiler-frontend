@@ -3,6 +3,7 @@ import CDNEditor from './CDNEditor'
 import {React, useState, useEffect} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlay} from '@fortawesome/free-solid-svg-icons'
+import { API_ENDPOINTS } from '../config/api'
 
 const languageModes = {
   python: 'python',
@@ -55,25 +56,37 @@ const Ide = () => {
   }, [])
 
   const runCode = async () => {
-    setOutput('~@Output:');
-    const response = await fetch('http://127.0.0.1:8080/ide/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        language,
-        code,
-        input,
-      }),
-    });
-    const data = await response.json();
-    setOutput(data.output);
-    if(data.error){
-      setOutput(data.error);
-    }
-    else{
-      setRuntime(data.runtime.toFixed(3));
+    try {
+      setOutput('~@Output:')
+      setError('')
+      setRuntime('--')
+
+      const response = await fetch(API_ENDPOINTS.ide, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          language,
+          code,
+          input,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.error && data.error.length > 0) {
+        setOutput(`Error: ${data.error}`)
+        setError(data.error)
+      } else if (data.output) {
+        setOutput(data.output)
+        setRuntime(data.runtime ? data.runtime.replace('s', '') : '--')
+      } else {
+        setOutput('No output generated')
+      }
+    } catch (err) {
+      setError('Network error occurred')
+      setOutput('Error: Failed to execute code')
     }
   };
 
