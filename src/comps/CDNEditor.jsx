@@ -5,8 +5,8 @@ const CDNEditor = ({ value = '', language = 'python', onChange }) => {
   const editorRef = useRef(null);
   const editorInstance = useRef(null);
 
-  // Track mount status to avoid CodeMirror bombing null div
   const [isReady, setIsReady] = useState(false);
+  const [height, setHeight] = useState(10);
 
   useEffect(() => {
     if (editorRef.current) {
@@ -14,7 +14,23 @@ const CDNEditor = ({ value = '', language = 'python', onChange }) => {
     }
   }, []);
 
-  // Init CodeMirror only when ready
+  const updateParentHeight = () => {
+    if (containerRef.current && containerRef.current.parentElement) {
+      const parentHeight = containerRef.current.parentElement.offsetHeight;
+      console.log('Parent height:', parentHeight);
+      setHeight(parentHeight);
+    }
+  };
+
+  useEffect(() => {
+    updateParentHeight();
+  }, [isReady]);
+
+  useEffect(() => {
+    window.addEventListener('resize', updateParentHeight);
+    return () => window.removeEventListener('resize', updateParentHeight);
+  }, []);
+
   useEffect(() => {
     if (!isReady || !window.CodeMirror || !editorRef.current || editorInstance.current) return;
 
@@ -39,14 +55,12 @@ const CDNEditor = ({ value = '', language = 'python', onChange }) => {
     };
   }, [isReady]);
 
-  // Language update
   useEffect(() => {
     if (editorInstance.current && language) {
       editorInstance.current.setOption('mode', language);
     }
   }, [language]);
 
-  // Value update
   useEffect(() => {
     if (
       editorInstance.current &&
@@ -57,25 +71,18 @@ const CDNEditor = ({ value = '', language = 'python', onChange }) => {
     }
   }, [value]);
 
-  // Layout resize fix
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
       editorInstance.current?.refresh();
-      editorInstance.current.setSize('100%', '100%');
+      editorInstance.current.setSize('100%', height+'px');
     });
     if (containerRef.current) resizeObserver.observe(containerRef.current);
     return () => resizeObserver.disconnect();
-  }, []);
+  }, [height]);
 
   return (
     <div
       ref={containerRef}
-      style={{
-        height: '100%',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
     >
       <div ref={editorRef} style={{ flexGrow: 1 }} />
     </div>
@@ -83,5 +90,3 @@ const CDNEditor = ({ value = '', language = 'python', onChange }) => {
 };
 
 export default CDNEditor;
-
-
