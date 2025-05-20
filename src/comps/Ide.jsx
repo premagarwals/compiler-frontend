@@ -1,20 +1,19 @@
 import './styles/Ide.css'
-import CDNEditor from './CDNEditor'
 import {React, useState, useEffect} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlay} from '@fortawesome/free-solid-svg-icons'
-import { API_ENDPOINTS } from '../config/api'
+import Editor from "@monaco-editor/react";
 
 const languageModes = {
-  python: 'python',
-  cpp: 'text/x-c++src',
-  java: 'text/x-java',
+  'python': 'python',
+  'c++': 'cpp',
+  'java': 'text/x-java',
 };
 
 const defaultCode = {
   python: '# Python code\nprint("Hello, world!")',
-  cpp: '// C++ code\n#include <iostream>\nint main() { std::cout << "Hello"; }',
-  java: '// Java code\npublic class Main { public static void main(String[] args) { System.out.println("Hello"); } }',
+  cpp: '// C++ code\n#include <iostream>\nusing namespace std;\n\nint main() { \n\tcout << "Hello"; \n}',
+  java: '// Java code\npublic class Main { \n\tpublic static void main(String[] args) { \n\t\tSystem.out.println("Hello"); \n\t} \n}',
 };
 
 const Ide = () => {
@@ -105,7 +104,7 @@ const Ide = () => {
       </div>
       <div className="panel">
         <div id="runner" className="runner" onClick={runCode}>
-          <FontAwesomeIcon icon={faPlay} style={{color: 'var(--primary-text)', fontSize: '2rem', cursor: 'pointer'}} />
+          <FontAwesomeIcon icon={faPlay} style={{color: 'var(--primary-text)', fontSize: '3rem', cursor: 'pointer'}} />
         </div>
         <div className="runtime">
           <p>{runtime} s</p>
@@ -113,16 +112,16 @@ const Ide = () => {
       </div>
       
       <div className="editor">
-        <CDNEditor
+        <Editor
           value={code}
           language={languageModes[language]}
           onChange={(updatedCode) => setCode(updatedCode)}
+          theme ="vs-dark"
         /> 
       </div>
       <div className="terminal">
         <div className="inputbox">
           <textarea onChange={(e) => setInput(e.target.value)}></textarea>
-          <div className="tag"> Input Box </div>
         </div>
         <div className="outputbox">
           <textarea value={output} onChange={(e) => setOutput(e.target.value)} readOnly></textarea>
@@ -134,3 +133,4 @@ const Ide = () => {
 }
 
 export default Ide
+
