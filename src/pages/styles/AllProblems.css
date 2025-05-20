@@ -31,15 +31,13 @@
 
 .problem-card .important {
   font-size: 1rem;
+  width: 50%;
 }
 
 .problem-card .important h2 {
   margin: 0;
 }
 
-.problem-card:hover {
-  transform: translateY(-2px);
-}
 .creator {
   color: var(--secondary-text);
 }
@@ -69,12 +67,35 @@
   font-weight: 600;
 }
 
+.problem-card div span {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
 .solved {
   color: #4caf50;
 }
 
 .attempted {
   color: #ff9800;
+}
+
+.solve {
+  padding: 1rem;
+  background-color: var(--primary);
+  border-radius: 1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.solve:hover {
+  transform: scale(1.05);
 }
 
 .loading, .error {
