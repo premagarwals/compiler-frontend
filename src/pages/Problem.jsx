@@ -50,7 +50,7 @@ const Problem = () => {
               <span className="attempted">☆ {problem.tried} attempts</span>
             </div>
           </div>
-          <div className="description">
+          <div className="description-box">
             <ReactMarkdown>{problem.description}</ReactMarkdown>
           </div>
         </div>
