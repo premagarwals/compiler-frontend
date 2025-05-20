@@ -1,0 +1,82 @@
+.problem-page {
+  min-height: 100vh;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+}
+
+.problem-container {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.problem-details {
+  flex: 1;
+  background: var(--secondary-bg);
+  padding: 2rem;
+  border-radius: 1rem;
+  min-width: 300px;
+}
+
+.ide-container {
+  flex: 2;
+  min-width: 600px;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--presence-bg);
+}
+
+.stats {
+  display: flex;
+  gap: 1rem;
+}
+
+.solved {
+  color: #4caf50;
+}
+
+.attempted {
+  color: #ff9800;
+}
+
+.description {
+  margin: 2rem 0;
+  line-height: 1.6;
+}
+
+.test-cases {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.sample {
+  background: var(--presence-bg);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.sample pre {
+  background: var(--presence-beta);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #ff4444;
+}

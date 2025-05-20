@@ -3,6 +3,7 @@ import {React, useState, useEffect} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlay} from '@fortawesome/free-solid-svg-icons'
 import Editor from "@monaco-editor/react";
+import {API_ENDPOINTS} from '../config/api'
 
 const languageModes = {
   'python': 'python',
@@ -84,8 +85,8 @@ const Ide = () => {
         setOutput('No output generated')
       }
     } catch (err) {
-      setError('Network error occurred')
-      setOutput('Error: Failed to execute code')
+      setError(`Network error occurred ${err}`)
+      setOutput(`Error: Failed to execute code ${err}`)
     }
   };
 
