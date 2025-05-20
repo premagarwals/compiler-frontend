@@ -17,7 +17,7 @@ const defaultCode = {
   java: '// Java code\npublic class Main { \n\tpublic static void main(String[] args) { \n\t\tSystem.out.println("Hello"); \n\t} \n}',
 };
 
-const Ide = () => {
+const Ide = ({ showSubmit = false, problemId = null }) => {
   const [language, setLanguage] = useState('python');
   const [code, setCode] = useState(defaultCode[language]);
   const [input, setInput] = useState('');
@@ -90,6 +90,43 @@ const Ide = () => {
     }
   };
 
+  const handleSubmit = async () => {
+    try {
+      setOutput('~@Output:')
+      setError('')
+      setRuntime('--')
+
+      const response = await fetch(API_ENDPOINTS.solve(problemId), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getAuthToken()}`
+        },
+        body: JSON.stringify({
+          language,
+          code,
+          input
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.solved) {
+        setOutput('Problem Solved! 🎉')
+        setRuntime(data.runtime ? data.runtime.replace('s', '') : '--')
+      } else if (data.error) {
+        setOutput(`Error: ${data.error}`)
+        setError(data.error)
+      } else {
+        setOutput(data.output || 'No output generated')
+        setRuntime(data.runtime ? data.runtime.replace('s', '') : '--')
+      }
+    } catch (err) {
+      setError('Network error occurred')
+      setOutput('Error: Failed to submit solution')
+    }
+  }
+
   return (
     <div className="ide">
       <div className="header">
@@ -105,12 +142,18 @@ const Ide = () => {
       </div>
       <div className="panel">
         <div id="runner" className="runner" onClick={runCode}>
-          <FontAwesomeIcon icon={faPlay} style={{color: 'var(--primary-text)', fontSize: '3rem', cursor: 'pointer'}} />
+          <FontAwesomeIcon icon={faPlay} style={{color: 'var(--primary-text)', fontSize: '2rem', cursor: 'pointer'}} />
         </div>
         <div className="runtime">
           <p>{runtime} s</p>
         </div>  
       </div>
+
+      {showSubmit && (
+          <button onClick={handleSubmit} className="submit-btn">
+            Submit Solution
+          </button>
+      )}
       
       <div className="editor">
         <Editor

@@ -6,7 +6,8 @@ export const API_ENDPOINTS = {
   ide: `${API_BASE_URL}/ide/`,
   addProblem: `${API_BASE_URL}/addproblem/`,
   getProblems: `${API_BASE_URL}/getproblems/`,
-  getProblem: (id) => `${API_BASE_URL}/problem/${id}/`
+  getProblem: (id) => `${API_BASE_URL}/problem/${id}/`,
+  solve: (id) => `${API_BASE_URL}/solve/${id}/`
 }
 
 export const getAuthToken = () => localStorage.getItem('jwt')

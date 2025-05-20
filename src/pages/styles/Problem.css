@@ -13,6 +13,16 @@
 .problem-page::-webkit-scrollbar {
   display: none;
 }
+.problem-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+  border-radius: 2rem;
+}
 .problem-details h1 {
   margin: 0;
 }
@@ -31,6 +41,7 @@
 .description-box {
   width: 100%;
   padding: 2rem;
+  box-sizing: border-box;
   border-radius: 1rem;
   background: var(--secondary-bg);
   color: var(--primary-text);
