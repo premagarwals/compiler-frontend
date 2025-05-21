@@ -3,7 +3,7 @@ import {React, useState, useEffect} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlay} from '@fortawesome/free-solid-svg-icons'
 import Editor from "@monaco-editor/react";
-import {API_ENDPOINTS} from '../config/api'
+import {API_ENDPOINTS, getAuthToken} from '../config/api'
 
 const languageModes = {
   'python': 'python',
@@ -123,7 +123,7 @@ const Ide = ({ showSubmit = false, problemId = null }) => {
       }
     } catch (err) {
       setError('Network error occurred')
-      setOutput('Error: Failed to submit solution')
+      setOutput(`Error: Failed to submit solution ${err}`)
     }
   }
 
